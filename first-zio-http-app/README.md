@@ -1,5 +1,10 @@
 # First zio-http app
 
+To run 
+```
+sbt run
+```
+
 To curl the routes defined, you can use the following commands:
 
 1. Route: GET /text
