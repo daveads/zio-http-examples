@@ -3,13 +3,21 @@ import zio.http._
 
 object MainApp extends ZIOAppDefault {
 
-  val app: App[Any] =
-    Http.collect[Request] {
-      case Method.GET -> Root / "text" => Response.text("Hello World!")
-      case Method.GET -> Root / "fruits" / "b" => Response.text("banana")
-      case Method.GET -> Root / "json" => Response.json("""{"greetings": "Hello World!"}""")
-    }
+    val textRoute =
+      Method.GET -> Root / "text" => handler(Response.text("Hello World!"))
 
-  override val run =
-    Server.serve(app).provide(Server.default)
+
+          // Method.GET -> Root / "fruits" / "b" => handler(Response.text("banana")),
+          
+    val jsonRoute =
+      Method.GET -> Root / "json" => handler(Response.json("""{"greetings": "Hello World!"}""")),
+  
+
+
+
+    // Create HTTP route
+    val app = Routes(textRoute, jsonRoute).toHttpApp
+
+    // Run it like any simple app
+    override val run = Server.serve(app).provide(Server.default)
 }
