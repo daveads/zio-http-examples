@@ -17,6 +17,7 @@ class MainAppTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.text, "banana")
 
+ 
     def test_json_route(self):
         url = self.BASE_URL + "/json"
         response = requests.get(url)
